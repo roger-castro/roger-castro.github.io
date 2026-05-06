@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roger Castro — IT Support Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161d;
+    --surface2: #1a1e28;
+    --border: #252a38;
+    --amber: #f0a500;
+    --amber-dim: #a87300;
+    --amber-glow: rgba(240,165,0,0.12);
+    --text: #dce3f0;
+    --muted: #6b7590;
+    --mono: 'JetBrains Mono', monospace;
+    --body: 'Outfit', sans-serif;
+    --display: 'DM Serif Display', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240,165,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,165,0,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(13,15,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+  }
+
+  .nav-logo span { color: var(--muted); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--amber); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 5rem;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(240,165,0,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 780px; }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
+    max-width: 720px;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    background: var(--surface);
+  }
+
+  .badge.lit {
+    border-color: var(--amber-dim);
+    color: var(--amber);
+    background: var(--amber-glow);
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--amber);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .hero-cta:hover { opacity: 0.85; }
+
+  .hero-cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    border: 1px solid var(--amber-dim);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    margin-left: 1rem;
+    transition: background 0.2s;
+  }
+
+  .hero-cta-ghost:hover { background: var(--amber-glow); }
+
+  /* ── SECTION COMMON ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  h2 span { color: var(--amber); font-style: italic; }
+
+  /* ── EXPERIENCE ── */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+    background: var(--border);
+  }
+
+  .exp-card {
+    background: var(--surface);
+    padding: 2rem 2.2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+
+  .exp-card:hover { background: var(--surface2); }
+
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: transparent;
+    transition: background 0.25s;
+  }
+
+  .exp-card:hover::before { background: var(--amber); }
+
+  .exp-role {
+    font-family: var(--body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.2rem;
+  }
+
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .exp-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-list { display: flex; flex-direction: column; gap: 1.5px; background: var(--border); }
+
+  .project-row {
+    background: var(--surface);
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 2rem;
+    transition: background 0.25s;
+    cursor: default;
+  }
+
+  .project-row:hover { background: var(--surface2); }
+
+  .project-name {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .project-desc { font-size: 0.9rem; color: var(--muted); max-width: 560px; }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 2px;
+  }
+
+  .project-link {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .project-link:hover { opacity: 0.7; }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+  }
+
+  .skill-block {
+    background: var(--surface);
+    padding: 1.8rem;
+    transition: background 0.25s;
+  }
+
+  .skill-block:hover { background: var(--surface2); }
+
+  .skill-category {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+  }
+
+  .skill-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skill-item {
+    font-size: 0.88rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-item::before {
+    content: '▸';
+    color: var(--amber-dim);
+    font-size: 0.65rem;
+  }
+
+  /* ── WRITE-UPS ── */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+  }
+
+  .post-card {
+    background: var(--surface);
+    padding: 2rem;
+    transition: background 0.25s;
+  }
+
+  .post-card:hover { background: var(--surface2); }
+
+  .post-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .post-title {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .post-excerpt {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── CONTACT ── */
+  .contact-wrap {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .contact-heading {
+    font-family: var(--display);
+    font-size: 2.4rem;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .contact-heading em { color: var(--amber); font-style: italic; }
+
+  .contact-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.8; }
+
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--amber-dim);
+    background: var(--amber-glow);
+  }
+
+  .contact-link-icon {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--amber);
+    width: 24px;
+    text-align: center;
+  }
+
+  .contact-link-text { font-size: 0.88rem; }
+  .contact-link-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0 3rem;
+    max-width: 1100px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag  { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+  h1         { animation: fadeUp 0.7s ease both; animation-delay: 0.2s; }
+  .hero-sub  { animation: fadeUp 0.7s ease both; animation-delay: 0.35s; }
+  .hero-badges { animation: fadeUp 0.7s ease both; animation-delay: 0.45s; }
+  .hero-actions { animation: fadeUp 0.7s ease both; animation-delay: 0.55s; }
+
+  /* ── TERMINAL BLOCK ── */
+  .terminal {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: #090b0f;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.5rem;
+    color: #4ade80;
+    line-height: 1.9;
+    max-width: 520px;
+  }
+
+  .terminal .prompt { color: var(--amber); }
+  .terminal .comment { color: var(--muted); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .exp-grid, .skills-grid, .posts-grid { grid-template-columns: 1fr; }
+    .contact-wrap { grid-template-columns: 1fr; }
+    .project-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>~/</span>roger-castro<span>.dev</span></div>
+  <ul>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Technical Support Engineer · Shelton, CT</div>
+    <h1>I fix what breaks,<br><em>and document</em><br>everything.</h1>
+    <p class="hero-sub">10+ years diagnosing complex systems — from enterprise BCDR stacks to self-hosted homelab networks. I don't just resolve tickets; I eliminate the conditions that create them.</p>
+
+    <div class="terminal">
+      <div><span class="prompt">$</span> whoami</div>
+      <div>roger-castro &nbsp;<span class="comment"># IT Support · Datto alum · Homelab operator</span></div>
+      <div><span class="prompt">$</span> uptime</div>
+      <div>12 years in support &nbsp;<span class="comment"># no reboots</span></div>
+      <div><span class="prompt">$</span> ping opportunity</div>
+      <div style="color: #f0a500;">PONG &nbsp;— open to remote roles ✓</div>
+    </div>
+
+    <div class="hero-badges">
+      <span class="badge lit">Open to Work</span>
+      <span class="badge lit">Remote-First</span>
+      <span class="badge">Windows 10/11</span>
+      <span class="badge">Linux</span>
+      <span class="badge">ZFS</span>
+      <span class="badge">Datto/BCDR</span>
+      <span class="badge">Intune/MDM</span>
+      <span class="badge">Autopilot</span>
+      <span class="badge">Docker</span>
+      <span class="badge">TCP/IP & DNS</span>
+      <span class="badge">ServiceNow</span>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#contact" class="hero-cta">Get in touch</a>
+      <a href="#projects" class="hero-cta-ghost">See my work →</a>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// 01 — Background</div>
+  <h2>Where I've <span>been.</span></h2>
+  <div class="exp-grid">
+    <div class="exp-card">
+      <div class="exp-role">End User Support Consultant</div>
+      <div class="exp-company">Subway — Corporate HQ</div>
+      <div class="exp-date">18 Months · Shelton, CT</div>
+      <p class="exp-desc">Provided enterprise-level end user support at corporate HQ, serving as SME for Ali Office — a legacy proprietary application unsupported for 13+ years — managing compatibility challenges introduced by Windows 11 migration. Identified and resolved a broken Autopilot reimaging workflow the team had abandoned for 3+ years, diagnosing the root cause, restoring functionality, and establishing it as the new SOP for device reimaging across the organization. Participated in the company-wide laptop refresh program, shipping new devices to users, guiding them through provisioning and configuration remotely, and managing ticket lifecycle through hardware return. Managed Okta identity operations including password resets and group management. Coordinated the recycling and responsible disposal of damaged and end-of-life laptops.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-role">BCDR Technical Support Engineer</div>
+      <div class="exp-company">Datto, Inc.</div>
+      <div class="exp-date">~5 Years · Norwalk, CT</div>
+      <p class="exp-desc">Supported MSPs and their clients through complex BCDR incidents over nearly 5 years. Performed hands-on data migrations via SSH and rsync across local appliances, and managed ZFS storage pool migrations during in-place drive upgrades. Handled cloud-side migrations by SSHing into Datto cloud infrastructure to realign datasets with new device IDs. Diagnosed and resolved hardware-level issues including failing drives, PSU/NIC failures, and memory faults — remotely where possible, coordinating on-site partner assistance when required. Conducted deep agent software troubleshooting including config file repairs, install/reinstall walkthroughs, Windows Event Viewer and Datto agent log analysis, and BSOD investigation on protected servers. Advised partners on appliance storage management and right-sizing — identifying when undersized hardware was the root cause of backup and restoration failures, and recommending appropriately scaled solutions.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-role">Homelab Architect & Operator</div>
+      <div class="exp-company">Nora-Net (Self-Hosted)</div>
+      <div class="exp-date">Ongoing</div>
+      <p class="exp-desc">Designed and maintain a production-grade self-hosted home network and server environment. Core stack includes pfSense for routing and firewall management, Pi-hole and Unbound for ad-blocking and recursive DNS resolution, and Tailscale for zero-config mesh VPN access. Runs multiple Dockerized services including Uptime Kuma for infrastructure monitoring, Nginx Proxy Manager for reverse proxy and SSL termination, and WeTTY for browser-based SSH access. Storage managed via ZFS. Entire environment is documented in a self-hosted BookStack wiki.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-role">Team Captain & Event Organizer</div>
+      <div class="exp-company">Extra Life — Children's Miracle Network</div>
+      <div class="exp-date">12 Consecutive Years</div>
+      <p class="exp-desc">12-year Extra Life participant and team co-captain for 7 years, leading a team that has raised $96,095 for Connecticut Children's Hospital — approximately 11% of total regional funds raised annually, with 3–4 team members consistently placing in the top 10 leaderboards. Oversee all logistics for an annual 24-hour gaming marathon averaging 40 attendees, including securing food sponsorships from local restaurants for breakfast, lunch, and dinner, managing seating and event layout, and assisting with on-site networking. In 2024, organized a separate public board game event that drew 100+ attendees, secured $2,000+ in donated prizes from local sponsors, and raised $6,400. Maintain a direct relationship with CMN and CT Children's Hospital. Manage a year-round Discord community of ~100 members.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// 02 — Projects</div>
+  <h2>Things I've <span>built.</span></h2>
+  <div class="projects-list">
+    <div class="project-row">
+      <div>
+        <div class="project-name">Nora-Net</div>
+        <p class="project-desc">A production-grade self-hosted home network and server environment following a Horizon Zero Dawn naming convention. Built around pfSense (fireclaw) for routing and firewall management, a primary and backup Pi-hole (thunderjaw/stormbird) with Unbound (demeter) for recursive DNS, and a dedicated Docker host (minerva) running 14 active containers including Nginx Proxy Manager, Uptime Kuma, WeTTY, ntfy, MariaDB, Portainer, and BookStack. Storage managed via ZFS on both servers. Remote access via Tailscale and DuckDNS. Fully documented in a self-hosted BookStack wiki organized across Infrastructure, Network & DNS, Services, Backup & Recovery, and Troubleshooting.</p>
+        <div class="project-tags">
+          <span class="tag">pfSense</span>
+          <span class="tag">Pi-hole</span>
+          <span class="tag">Unbound</span>
+          <span class="tag">Docker</span>
+          <span class="tag">ZFS</span>
+          <span class="tag">Tailscale</span>
+          <span class="tag">Nginx Proxy Manager</span>
+          <span class="tag">Uptime Kuma</span>
+          <span class="tag">BookStack</span>
+          <span class="tag">Linux</span>
+          <span class="tag">DNS</span>
+          <span class="tag">DuckDNS</span>
+        </div>
+      </div>
+      <a href="https://github.com/roger-castro/Nora-Net" target="_blank" class="project-link">GitHub →</a>
+    </div>
+    <div class="project-row">
+      <div>
+        <div class="project-name">TechBarTools</div>
+        <p class="project-desc">A plug-and-run USB toolkit built for enterprise tech bar and helpdesk environments. A single menu-driven CMD launcher consolidates the most common Windows support tasks: adding and removing local administrators, clearing Windows Hello PINs, capturing Autopilot HWIDs with group tag selection, driver version snapshots across four imaging stages, and returning devices to OOBE via Sysprep — with a dynamically written unattend.xml that preserves the Autopilot-assigned hostname through the specialize pass. Runs on Windows 10 and 11, requires no installation, and automatically creates its own output folders on first launch.</p>
+        <div class="project-tags">
+          <span class="tag">CMD/Batch</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">Autopilot</span>
+          <span class="tag">Sysprep</span>
+          <span class="tag">Unattend.xml</span>
+          <span class="tag">Intune/MDM</span>
+          <span class="tag">Windows 10/11</span>
+          <span class="tag">USB Deploy</span>
+        </div>
+      </div>
+      <a href="https://github.com/roger-castro/TechBarTools" target="_blank" class="project-link">GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// 03 — Toolkit</div>
+  <h2>What I <span>work with.</span></h2>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <div class="skill-category">Networking</div>
+      <div class="skill-items">
+        <span class="skill-item">pfSense / Firewall Rules</span>
+        <span class="skill-item">Tailscale</span>
+        <span class="skill-item">DNS (Unbound, Pi-hole)</span>
+        <span class="skill-item">VLANs & Subnetting</span>
+        <span class="skill-item">NAT / Port Forwarding / UPnP</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-category">Linux & Storage</div>
+      <div class="skill-items">
+        <span class="skill-item">Linux CLI & Administration</span>
+        <span class="skill-item">SSH / Remote Access</span>
+        <span class="skill-item">ZFS Pool Management</span>
+        <span class="skill-item">rsync / Data Migration</span>
+        <span class="skill-item">Log Analysis (Event Viewer, Datto Agent, syslog)</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-category">Infrastructure</div>
+      <div class="skill-items">
+        <span class="skill-item">Docker / Containers</span>
+        <span class="skill-item">Portainer</span>
+        <span class="skill-item">BCDR (Datto Platform)</span>
+        <span class="skill-item">Backup Replication & Restores</span>
+        <span class="skill-item">Virtualization</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-category">End User & Deploy</div>
+      <div class="skill-items">
+        <span class="skill-item">Microsoft Autopilot</span>
+        <span class="skill-item">Intune / MDM</span>
+        <span class="skill-item">Sysprep & OOBE</span>
+        <span class="skill-item">Hardware Lifecycle</span>
+        <span class="skill-item">Okta (Identity & Groups)</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-category">Scripting & Automation</div>
+      <div class="skill-items">
+        <span class="skill-item">Batch / CMD Scripting</span>
+        <span class="skill-item">PowerShell</span>
+        <span class="skill-item">Bash / Shell Scripting</span>
+        <span class="skill-item">XML Config (Unattend)</span>
+        <span class="skill-item">Menu-Driven Launchers</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-category">Identity & Ticketing</div>
+      <div class="skill-items">
+        <span class="skill-item">ServiceNow</span>
+        <span class="skill-item">Zendesk</span>
+        <span class="skill-item">Salesforce</span>
+        <span class="skill-item">Okta</span>
+        <span class="skill-item">Windows Hello for Business</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-category">Documentation</div>
+      <div class="skill-items">
+        <span class="skill-item">BookStack (Self-Hosted Wiki)</span>
+        <span class="skill-item">Network Topology Diagrams</span>
+        <span class="skill-item">Runbook / SOP Writing</span>
+        <span class="skill-item">Knowledge Base Authoring</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-category">Soft Skills</div>
+      <div class="skill-items">
+        <span class="skill-item">Remote Troubleshooting</span>
+        <span class="skill-item">MSP / Enterprise Support</span>
+        <span class="skill-item">Event & Community Leadership</span>
+        <span class="skill-item">Escalation Management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section id="writing">
+  <div class="section-label">// 04 — Write-Ups</div>
+  <h2>How I <span>think.</span></h2>
+  <div class="posts-grid">
+    <div class="post-card">
+      <div class="post-label">Career · Documentation</div>
+      <div class="post-title">I Thought Portfolios Weren't for People Like Me. So I Built a Wiki Instead.</div>
+      <p class="post-excerpt">I'm in IT support — not a developer. I thought portfolios weren't for people like me. So I built a self-hosted wiki instead. Turns out that was a portfolio all along.</p>
+      <a href="https://dev.to/rogercastro/i-thought-portfolios-werent-for-people-like-me-so-i-built-a-wiki-instead-4daf" target="_blank" class="project-link" style="display:inline-block; margin-top: 1rem;">Read on Dev.to →</a>
+    </div>
+    <div class="post-card">
+      <div class="post-label">Deployment · Process Improvement</div>
+      <div class="post-title">We Were Reimaging Laptops the Hard Way for 3 Years. I Fixed It in an Afternoon.</div>
+      <p class="post-excerpt">Our team had abandoned Autopilot Reset years ago because "it didn't work." Nobody had tried it since. I tried it. It worked. Here's how we cut a 6-hour reimaging process down to 2.</p>
+      <a href="https://dev.to/rogercastro/we-were-reimaging-laptops-the-hard-way-for-3-years-i-fixed-it-in-an-afternoon-2fn9" target="_blank" class="project-link" style="display:inline-block; margin-top: 1rem;">Read on Dev.to →</a>
+    </div>
+    <div class="post-card">
+      <div class="post-label">Homelab · Networking</div>
+      <div class="post-title">How I Finally Got Remote Access to My Homelab (And the Workaround That Made It Actually Work)</div>
+      <p class="post-excerpt">Tailscale on pfSense gave me remote access to my whole network in one install. SSH into my Docker host was a different story — here's the routing problem I hit and the WeTTY workaround that solved it.</p>
+      <a href="https://dev.to/rogercastro/how-i-finally-got-remote-access-to-my-homelab-and-the-workaround-that-made-it-actually-work-4oad" target="_blank" class="project-link" style="display:inline-block; margin-top: 1rem;">Read on Dev.to →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">// 05 — Contact</div>
+  <div class="contact-wrap">
+    <div>
+      <div class="contact-heading">Let's work<br><em>together.</em></div>
+      <p class="contact-sub">I'm actively looking for Technical Support Engineer or similar roles — remote preferred, open to hybrid within a reasonable commute of Shelton, CT. If you're hiring or know someone who is, I'd love to connect.</p>
+    </div>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/roger-castro-jr/" target="_blank" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        <div>
+          <div class="contact-link-text">LinkedIn</div>
+          <div class="contact-link-label">linkedin.com/in/roger-castro-jr</div>
+        </div>
+      </a>
+      <a href="https://github.com/roger-castro" target="_blank" class="contact-link">
+        <span class="contact-link-icon">&lt;/&gt;</span>
+        <div>
+          <div class="contact-link-text">GitHub</div>
+          <div class="contact-link-label">github.com/roger-castro</div>
+        </div>
+      </a>
+      <a href="mailto:rogerjr.castro@gmail.com" class="contact-link">
+        <span class="contact-link-icon">@</span>
+        <div>
+          <div class="contact-link-text">Email</div>
+          <div class="contact-link-label">rogerjr.castro@gmail.com</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Roger Castro — Shelton, CT</p>
+  <p>Built with intent. Documented thoroughly.</p>
+</footer>
+
+</body>
+</html>
